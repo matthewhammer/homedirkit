@@ -2,7 +2,7 @@
 
 set -e
 
-targRoot="/Users/matthew/mah/GoogleDrive"
+targRoot="/media/matthew/LaCie/"
 date=`date "+%Y%m%d-%H%M"`
 
 targets=(
@@ -10,15 +10,15 @@ targets=(
     01
 )
 sources=(
-    /Volumes/IC\ RECORDER/REC_FILE/FOLDER01/
-    /Volumes/IC\ RECORDER\ 1/REC_FILE/FOLDER01/
+    /media/matthew/IC\ RECORDER/REC_FILE/FOLDER01/
+    /media/matthew/IC\ RECORDER\ 1/REC_FILE/FOLDER01/
 )
 toDelete=()
 for index in ${!targets[*]}; do 
     target=${targets[$index]}
     source=${sources[$index]}
     echo "copy $target <== $source ..."
-    if [ -e "$source/"* ]; then
+    if [ -e "$source/" ]; then
         path="$targRoot/$date-sony-ic-recorder/$target"
         mkdir -p $path
         cp -v "$source/"* $path
