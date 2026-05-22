@@ -2,17 +2,13 @@
 
 set -e
 
-targRoot="/Users/matthew/mah/GoogleDrive"
+#targRoot="/Users/matthew/mah/GoogleDrive"
+targRoot="/media/matthew/LaCie/"
 date=`date "+%Y%m%d-%H%M"`
 targPath="$targRoot/$date-piecemeal"
 
 mkdir -p $targPath
 
-mkdir "$targPath/Documents"
-touch "/Users/matthew/Documents/TIMESTAMP-backup-piecemeals-on-`date`"
-mv /Users/matthew/Documents/* $targPath/Documents
-
 mkdir "$targPath/Downloads"
-touch "/Users/matthew/Downloads/TIMESTAMP-backup-piecemeals-on-`date`"
-mv /Users/matthew/Downloads/* $targPath/Downloads
+mv -v /home/matthew/Downloads/* $targPath/Downloads
 

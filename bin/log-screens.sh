@@ -15,10 +15,20 @@ take_screenshot() {
     DATE_DIR="$BASE_DIR/$(date +%Y-%m-%d)"
     mkdir -p "$DATE_DIR"
 
-    # Take the screenshot with scrot and save with timestamped filename
+    # Take the screenshot with gnome-screenshot and save with timestamped filename
     TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
     FILENAME="$DATE_DIR/screenshot_$TIMESTAMP.png"
-    gnome-screenshot -f "$FILENAME"
+
+    # Check if the screen is on or off
+    SCREEN_STATUS=$(xset q | grep "Monitor is")
+
+    if [[ "$SCREEN_STATUS" == *"Monitor is Off"* ]]; then
+        # If the screen is off, don't take a screenshot, instead log the event
+        echo "Black screen at $TIMESTAMP" > "$DATE_DIR/screenshot_$TIMESTAMP.txt"
+    else
+        # If the screen is on, take the screenshot
+        gnome-screenshot -f "$FILENAME"
+    fi
 }
 
 # Read the interval from the file (default to 5 minutes if the file doesn't exist or is empty)
@@ -35,10 +45,7 @@ read_interval() {
 
 # Run the script in an infinite loop
 while true; do
-    echo reading $INTERVAL_FILE
     read_interval
-    echo screenshot
     take_screenshot
-    echo sleeping "${INTERVAL}m"
     sleep "${INTERVAL}m"
 done
